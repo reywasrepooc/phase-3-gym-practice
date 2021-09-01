@@ -7,15 +7,19 @@ class Gym < ActiveRecord::Base
   end
 
   def print_all_memberships
-    memberships.each { |membership| membership.print_membership }
+    memberships.each(&:print_membership)
   end
 
   def first_member
     members.order(:start_year).first
   end
 
-#   def self.best_value
-    
-#   end
+  def gym_value
+    rating.to_f / price
+  end
+
+  def self.best_value
+    all.map { |gym| gym.gym_value }.max
+  end
 
 end
